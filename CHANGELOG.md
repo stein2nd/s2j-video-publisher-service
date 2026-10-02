@@ -2,6 +2,8 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-03
+
 ### Changed
 
 * `package.json` の `description` を、YouTube 動画の公開期間を決めるライブラリ (WordPress 非依存) に更新

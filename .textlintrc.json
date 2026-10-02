@@ -1,0 +1,28 @@
+{
+    "extends": ["./node_modules/@s2j/docs-linter/presets/base/.textlintrc.base.json"],
+    "plugins": {},
+    "filters": {
+        "allowlist": {
+            "allow": [
+                "/エントリー/",
+                "/エントリ/",
+                "/(?<!プ)レイヤー/",
+                "/(?<!プレ)レイヤ(?!ー)/",
+                "/ローダー/",
+                "/スクロール/",
+                "/ロールバック/",
+                "/@wordpress\\/[a-zA-Z0-9@._/-]*/i",
+                "/kis-wordpress/",
+                "/inquiry-destination-service/",
+                "/s2j-inquiry-destination-service/",
+                "/kansai-wordpress-meetup/",
+                "/PHPMailer/",
+                "/wp_mail/",
+                "/[.。]\\s*「/u"
+            ]
+        }
+    },
+    "rules": {
+        "preset-wp-docs-ja": true
+    }
+}

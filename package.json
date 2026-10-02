@@ -1,7 +1,7 @@
 {
     "name": "s2j-video-publisher-service",
     "version": "0.0.1",
-    "description": "A Library for setting the publication period of YouTube videos (WP-Independent)",
+    "description": "A pure PHP library for setting the publication period of YouTube videos (WP-Independent)",
     "license": "GPL-3.0-or-later",
     "author": "Koutarou ISHIKAWA <stein2nd@gmail.com>",
     "repository": {

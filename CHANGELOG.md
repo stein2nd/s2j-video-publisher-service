@@ -14,6 +14,7 @@
 * README と `docs_mod/service_spec.md` の表記をドキュメント lint に合わせた (半角括弧、数字前後の空白、`そろえ`、`デフォルト` など)
 
 * `package.json` の `description` を、YouTube 動画の公開期間を決めるライブラリ (WordPress 非依存) に更新
+* `composer.json` と `package.json` の `description` を、純粋な PHP ライブラリである旨に更新
 * `.vscode/settings.json` で `json.schemaDownload.enable` を有効にし、`package.json` のスキーマを取得できるようにした
 * `.vscode/settings.json` から `npm.enableScriptExplorer` を削除
 * textlint 拡張の導入後にマージする設定例を `.vscode/textlint.settings.jsonc.example` に追加

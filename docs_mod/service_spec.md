@@ -14,7 +14,7 @@
 
 案内する相手を限定した、期間限定の動画を YouTube に載せる依頼は、従前から届きます。YouTube Studio では、公開開始の予約はできるが、公開終了の予約はできません。
 
-Studio の予約公開は、非公開の動画を指定時刻に **公開 (public)** にする機能です。限定公開 (unlisted) の開始時刻は予約できません。時刻を揃えるために予約公開を使うと、その時刻にチャンネルに公開され、その後で手作業により「限定公開」に変え、終了時刻にまた手作業で非公開に戻す運用になります。
+Studio の予約公開は、非公開の動画を指定時刻に **公開 (public)** にする機能です。限定公開 (unlisted) の開始時刻は予約できません。時刻をそろえるために予約公開を使うと、その時刻にチャンネルに公開され、その後で手作業により「限定公開」に変え、終了時刻にまた手作業で非公開に戻す運用になります。
 
 本プロダクトが埋めるのは、その穴です。
 
@@ -34,7 +34,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 自身が運営する YouTube チャンネルについて、動画ごとの **公開期間** を管理します。
 
-公開期間の開始では `privacyStatus` を `unlisted` にし、終了では `private` にします。開始時刻も終了時刻も、分単位で指定した時刻に揃えます。
+公開期間の開始では `privacyStatus` を `unlisted` にし、終了では `private` にします。開始時刻も終了時刻も、分単位で指定した時刻にそろえます。
 
 初版のユーザーは、そのチャンネルの運営者です。複数サイトに配る OAuth クライアントは、初版の前提にしません。
 
@@ -53,15 +53,15 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 使うメソッドは、次の2つです。
 
-| メソッド | 役割 | クォータの置き場 (2026-10 時点の公式) |
+| メソッド | 役割 | クォータの置き場 (2026-10時点の公式) |
 | --- | --- | --- |
-| `videos.insert` | 動画ファイルとメタデータのアップロード | Video Uploads バケット。既定 100 コール/日。1 コールあたり 1 unit |
-| `videos.update` | `status.privacyStatus` の変更 | その他のメソッドと共有の 10,000 units/日。`videos.update` は 50 units |
-| `videos.list` | 処理状況と公開状態の確認 | 共有バケット。1 unit |
+| `videos.insert` | 動画ファイルとメタデータのアップロード | Video Uploads バケット。デフォルト100コール/日。1コールあたり1unit |
+| `videos.update` | `status.privacyStatus` の変更 | その他のメソッドと共有の10,000units/日。`videos.update` は50units |
+| `videos.list` | 処理状況と公開状態の確認 | 共有バケット。1unit |
 
-`videos.insert` と `search.list` は、2026-06-01 以降、共有バケットとは別の枠です。共有バケットの残量があっても、アップロード枠が尽きた `videos.insert` は失敗します。
+`videos.insert` と `search.list` は、2026-06-01以降、共有バケットとは別の枠です。共有バケットの残量があっても、アップロード枠が尽きた `videos.insert` は失敗します。
 
-`status.publishAt` は、`privacyStatus` が `private` であり、かつ一度も公開されていない動画にだけ設定できます。設定した時刻が来ると `public` になります。過去の時刻を入れると、直ちに `public` になるのと同じです。限定公開の開始には使いません。
+`status.publishAt` は、`privacyStatus` が `private` であり、かつ一度も公開されていない動画にだけ設定できます。設定した時刻が来ると `public` になります。過去の時刻を入れると、ただちに `public` になるのと同じです。限定公開の開始には使いません。
 
 `privacyStatus` に指定できる値は `public` / `unlisted` / `private` です。
 
@@ -74,9 +74,9 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 * [Revision History](https://developers.google.com/youtube/v3/revision_history)
 * [Schedule video publish time](https://support.google.com/youtube/answer/1270709)
 
-2025-12-04 の改訂で、アップロードのコストは約 1,600 units から約 100 units へ変わっています。2026-06-01 以降の現行ドキュメントでは、`videos.insert` は専用バケットの 1 unit / コールです。Quota Calculator の表には旧コストが残っている箇所があります。実装時は Cloud Console の当該プロジェクトの表示を正とします。
+2025-12-04の改訂で、アップロードのコストは約1,600units から約100units へ変わっています。2026-06-01以降の現行ドキュメントでは、`videos.insert` は専用バケットの1unit / コールです。Quota Calculator の表には旧コストが残っている箇所があります。実装時は Cloud Console の当該プロジェクトの表示を正とします。
 
-本プロダクトの本数（1日に数本、状態変更は開始と終了の2回）は、既定枠の中に収まります。処理待ちの確認は、`processing` の動画だけを `videos.list` で見ます。公開期間中の動画を毎分ポーリングしません。
+本プロダクトの本数 (1日に数本、状態変更は開始と終了の2回) は、デフォルト枠の中に収まります。処理待ちの確認は、`processing` の動画だけを `videos.list` で見ます。公開期間中の動画を毎分ポーリングしません。
 
 ## 監査と OAuth
 
@@ -84,7 +84,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 ### アップロードした動画が「非公開」に固定される門
 
-2020-07-28 以降に作られた未監査の API プロジェクトから `videos.insert` した動画は、private viewing mode に制限されます。リクエストで `unlisted` や `public` を指定しても、動画は非公開のままロックされます。ロックされた動画の解除申請はできず、監査済みクライアントか YouTube のサイトから上げ直す必要があります。
+2020-07-28以降に作られた未監査の API プロジェクトから `videos.insert` した動画は、private viewing mode に制限されます。リクエストで `unlisted` や `public` を指定しても、動画は非公開のままロックされます。ロックされた動画の解除申請はできず、監査済みクライアントか YouTube のサイトから上げ直す必要があります。
 
 したがって、**監査が通るまで `videos.insert` は製品の機能にしません。**
 
@@ -94,7 +94,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 ### トークンが7日で切れる門
 
-OAuth 同意画面が Testing のアプリでは、リフレッシュトークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュトークンが要ります。YouTube のコンプライアンス監査とは別です。
+OAuth 同意画面が Testing のアプリでは、リフレッシュトークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュトークンがいります。YouTube のコンプライアンス監査とは別です。
 
 スコープは `https://www.googleapis.com/auth/youtube.upload` を最小とします。`videos.insert` と `videos.update` の両方に載っているスコープです。チャンネル全体を扱う `youtube` スコープは要求しません。
 
@@ -106,14 +106,14 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュトーク�
 
 | 層 | 中身 | 置き場 |
 | --- | --- | --- |
-| 計算 | 公開期間の検証、状態の写像、次に叩く API 操作の決定、`videos.insert` / `videos.update` のリクエスト材料 | **本ライブラリ** |
+| 計算 | 公開期間の検証、状態の写像、次にたたく API 操作の決定、`videos.insert` / `videos.update` のリクエスト材料 | **本ライブラリ** |
 | 副作用 | OAuth、HTTP、ブラウザからの resumable upload、cron、管理画面、動画 ID の保存 | **S2J Video Publisher** (プラグイン) |
 
 プラグイン一本に判断を置くと、時刻と公開状態の組み合わせをユニットテストするたびに WordPress と YouTube が必要になります。
 
 ## 本ライブラリの責務
 
-入力は、動画レコードと「今」の時刻です。出力は、次の操作と、操作後のレコードです。HTTP レスポンスの解釈も、渡されたステータスとボディから結果レコードを作るところまでです。
+入力は、動画レコードと「今」の時刻です。出力は、次の操作と、操作後のレコードです。HTTP レスポンスの解釈も、渡されたステータスとボディから結果レコードを作るところまで、です。
 
 | 責務 | 内容 |
 | --- | --- |
@@ -129,7 +129,7 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュトーク�
 * `snippet.categoryId`
 * `status.privacyStatus` = `private`
 * `status.selfDeclaredMadeForKids`
-* `status.containsSyntheticMedia`（insert の現行スキーマで必須なら渡す。実装時に公式で確認する）
+* `status.containsSyntheticMedia` (insert の現行スキーマで必須なら渡す。実装時に公式で確認する)
 
 `status.publishAt` は材料に含めません。
 
@@ -188,7 +188,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 | アップロード | 監査後。セッション開始はプラグインが OAuth 付きで行い、バイト列はブラウザから YouTube の resumable 先へ直接送る。WordPress のディスクと PHP のメモリにファイルを載せない |
 | 表示 | 見出しは「動画の公開期間」。列はタイトル、状態、開始、終了、直近のエラー |
 
-実行の契機は、ホストに OS の cron があるなら1分間隔で WordPress を起動します。無いホストでは WP-Cron を使い、アクセスが無い時間は遅れることを画面に書きます。ライブラリは契機を知りません。`now` を受け取るだけです。
+実行の契機は、ホストに OS の cron があるなら1分間隔で WordPress を起動します。cron がないホストでは WP-Cron を使い、アクセスがない時間は遅れることを画面に書きます。ライブラリは契機を知りません。`now` を受け取るだけです。
 
 監査前の登録画面は、動画 ID、タイトル、開始日時、終了日時です。ファイル入力は、監査完了を設定で示すまで出しません。
 
@@ -219,8 +219,8 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 ## 実装順
 
 1. 本ドラフトの合意。
-2. Studio で非公開（予約公開なし）にした動画1本に対し、監査前のプロジェクトから `videos.update` で `unlisted` と `private` を往復できるかを確認する。
-3. 本 repo でスケルトンと純関数の初版（PHPUnit、WordPress なし、HTTP なし）。
+2. Studio で非公開 (予約公開なし) にした動画1本に対し、監査前のプロジェクトから `videos.update` で `unlisted` と `private` を往復できるかを確認する。
+3. 本 repo でスケルトンと純関数の初版 (PHPUnit、WordPress なし、HTTP なし)。
 4. プラグインが Composer で require し、台帳と `videos.update` のスケジューラをつなぐ。
 5. OAuth 同意画面を Production にし、リフレッシュトークンが7日で切れないことを確認する。
 6. YouTube API のコンプライアンス監査の後に、ブラウザから YouTube へ直接送る `videos.insert` を足す。挿入時の公開状態は `private`、`publishAt` は付けない。処理が `succeeded` になってから、上記の開始・終了に乗る。

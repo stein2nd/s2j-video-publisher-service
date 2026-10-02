@@ -2,6 +2,10 @@
 
 ## unreleased
 
+### Changed
+
+* README と `docs_mod/service_spec.md` の表記をドキュメント lint に合わせた (半角括弧、数字前後の空白、`そろえ`、`デフォルト` など)
+
 ## 0.0.1 - 2026-10-03
 
 ### Changed

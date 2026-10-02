@@ -1,0 +1,75 @@
+{
+    "name": "s2j/video-publisher-service",
+    "description": "A Library for setting the publication period of YouTube videos (WP-Independent)",
+    "version": "0.0.1",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Koutarou ISHIKAWA",
+            "email": "stein2nd@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/stein2nd/s2j-video-publisher-service",
+    "support": {
+        "issues": "https://github.com/stein2nd/s2j-video-publisher-service/issues",
+        "source": "https://github.com/stein2nd/s2j-video-publisher-service"
+    },
+    "autoload": {
+        "psr-4": {
+            "S2J\\VideoPublisherService\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.1",
+        "phpstan/phpstan": "^2.1",
+        "squizlabs/php_codesniffer": "^4.0"
+    },
+    "archive": {
+        "name": "s2j-video-publisher-service",
+        "exclude": [
+            "/node_modules",
+            "/vendor",
+            "/wordpress",
+            "/tests",
+            "/docs",
+            "/docs_old",
+            "/.github",
+            "/.vscode",
+            "/.cursor",
+            "/packages",
+            "/scripts",
+            "/schema",
+            "/tools",
+            "/examples",
+            "/artifacts",
+            "/dist",
+            "/tmp",
+            "/.sandbox",
+            ".phpunit.cache",
+            ".phpunit.result.cache",
+            "phpunit.xml",
+            "phpcs.xml.dist",
+            "phpstan.neon",
+            "package.json",
+            "package-lock.json",
+            ".textlintrc.json",
+            "composer.lock",
+            ".DS_Store",
+            ".gitignore"
+        ]
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit",
+        "phpstan": "@php vendor/bin/phpstan analyse --memory-limit=512M",
+        "phpcs": "@php vendor/bin/phpcs",
+        "phpcbf": "@php vendor/bin/phpcbf",
+        "lint:php": [
+            "@phpstan",
+            "@phpcs"
+        ]
+    }
+}

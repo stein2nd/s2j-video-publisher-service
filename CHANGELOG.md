@@ -4,8 +4,13 @@
 
 ## 0.0.1 - 2026-10-03
 
+### Added
+
+* `composer.json` を追加 (`s2j/video-publisher-service`、名前空間 `S2J\VideoPublisherService\`、PHP 8.0以上、開発依存に PHPUnit / PHPStan / PHPCS)
+
 ### Changed
 
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.26に更新
 * README と `docs_mod/service_spec.md` の表記をドキュメント lint に合わせた (半角括弧、数字前後の空白、`そろえ`、`デフォルト` など)
 
 * `package.json` の `description` を、YouTube 動画の公開期間を決めるライブラリ (WordPress 非依存) に更新

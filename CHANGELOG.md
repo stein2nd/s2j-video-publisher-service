@@ -2,6 +2,16 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-05
+
+### Changed
+
+* `docs_mod/service_spec.md` の insert で、`categoryId` の未変更時は `22` とした
+* `selfDeclaredMadeForKids` と `containsSyntheticMedia` は、プラグインが選んだ `true` か `false` だけを受ける。未選択では insert しない
+* 接続中のチャンネル名のため、スコープに `youtube.readonly` を足した。`channels.list` は `youtube.upload` だけでは呼べない
+* 実行契機はプラグインの WP-Cron に置く。ライブラリは `now` を受け取るだけ、と記録した
+* 監査前の `videos.update` の確認は、人が動画1本で見る結果であり、自動テストの項目ではない、と補足
+
 ## 0.0.1 - 2026-10-04
 
 ### Changed

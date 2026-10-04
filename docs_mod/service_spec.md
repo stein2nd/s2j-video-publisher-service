@@ -96,7 +96,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 OAuth 同意画面が Testing のアプリでは、リフレッシュトークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュトークンがいります。YouTube のコンプライアンス監査とは別です。
 
-スコープは `https://www.googleapis.com/auth/youtube.upload` を最小とします。`videos.insert` と `videos.update` の両方に載っているスコープです。チャンネル全体を扱う `youtube` スコープは要求しません。
+スコープは次の2つです。`https://www.googleapis.com/auth/youtube.upload` は `videos.insert` と `videos.update` に使います。`https://www.googleapis.com/auth/youtube.readonly` は、プラグインが接続中のチャンネル名を `channels.list` (`mine=true`、`part=snippet`) で取るために使います。`youtube.upload` だけでは `channels.list` は呼べません。チャンネル全体を扱う `youtube` スコープは要求しません。
 
 クライアント ID とクライアントシークレットは、プラグインに同梱しません。サイトの設定として渡します。リポジトリにコミットしません。
 
@@ -126,10 +126,10 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュトーク�
 
 * `snippet.title`
 * `snippet.description`
-* `snippet.categoryId`
+* `snippet.categoryId`。プラグインのコンボボックスが渡す。未変更時は `22` (People & Blogs)
 * `status.privacyStatus` = `private`
-* `status.selfDeclaredMadeForKids`
-* `status.containsSyntheticMedia` (insert の現行スキーマで必須なら渡す。実装時に公式で確認する)
+* `status.selfDeclaredMadeForKids`。プラグインが `true` か `false` を渡す。未選択のままでは insert しない
+* `status.containsSyntheticMedia`。プラグインが `true` か `false` を渡す。未選択のままでは insert しない
 
 `status.publishAt` は材料に含めません。
 
@@ -189,7 +189,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 | アップロード | 監査後。セッション開始はプラグインが OAuth 付きで行い、バイト列はブラウザから YouTube の resumable 先へ直接送る。WordPress のディスクと PHP のメモリにファイルを載せない |
 | 表示 | 見出しは「動画の公開期間」。列はタイトル、状態、開始、終了、直近のエラー |
 
-実行の契機は、ホストに OS の cron があるなら1分間隔で WordPress を起動します。cron がないホストでは WP-Cron を使い、アクセスがない時間は遅れることを画面に書きます。ライブラリは契機を知りません。`now` を受け取るだけです。
+実行の契機はプラグインが持ちます。処理は WP-Cron の1分間隔に置き、最終実行の時刻の遅れで、訪問なしに進んでいるかを画面が判断します。ライブラリは契機を知りません。`now` を受け取るだけです。
 
 監査前の登録画面は、動画 ID、タイトル、開始日時、終了日時です。ファイル入力は、監査完了を設定で示すまで出しません。
 
@@ -244,9 +244,7 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 
 ## 未決事項
 
-* 監査前の `videos.update` で、Studio から上げた非公開動画を `unlisted` にできるか。動画1本で確認する。
-* 実行契機を OS cron にするか、WP-Cron にするか。ホストが決まってからプラグイン仕様で固定する。
-* `status.containsSyntheticMedia` を insert ボディの必須項目に含めるか。実装時の公式スキーマで確定する。
+* 監査前の `videos.update` が、Studio から上げた非公開動画に通るか。確認のやり方は決まっている。動画1本を、監査前の API プロジェクトから `unlisted` と `private` に往復させ、人が結果を見る。「今すぐ実行」は、その1行について cron と同じ手順をその場で走らせる。自動テストの項目ではない。未決なのは結果で、通れば監査前に開始と終了の自動化を作り、失敗すれば監査完了まで保留する。
 
 ## 改訂履歴
 
@@ -254,3 +252,8 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 | --- | --- |
 | 2026-10-02 | 初版ドラフト。限定公開の公開期間、`publishAt` を使わないこと、監査前は台帳と `videos.update` だけにすること、ライブラリとプラグインの境界を記録 |
 | 2026-10-04 | プラグイン仕様を [s2j-video-publisher の docs_mod/specs.md](https://github.com/stein2nd/s2j-video-publisher/blob/main/docs_mod/specs.md) に書いた。公開期間の途中は操作 `none`、と補足 |
+| 2026-10-05 | insert の `categoryId` は未変更時 `22`。`selfDeclaredMadeForKids` はプラグインが選んだ `true` か `false` だけを受ける、と記録 |
+| 2026-10-05 | `containsSyntheticMedia` はプラグインが選んだ `true` か `false` だけを受ける。未選択のままでは insert しない、と記録 |
+| 2026-10-05 | 接続中のチャンネル名のため、スコープに `youtube.readonly` を足す。`channels.list` は `youtube.upload` だけでは呼べない、と記録 |
+| 2026-10-05 | 実行契機はプラグインの WP-Cron に置く。ライブラリは `now` を受け取るだけ、と記録 |
+| 2026-10-05 | 監査前の `videos.update` の未決を、プラグイン仕様と同じく、人が動画1本で往復する結果である、とそろえた |

@@ -2,6 +2,15 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-04
+
+### Changed
+
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.27に更新
+* `docs_mod/service_spec.md` に、公開期間の途中は操作 `none`、`phase` は `live` と補足した
+* プラグイン仕様の参照先を s2j-video-publisher の `docs_mod/specs.md` にした
+* `docs_mod/service_spec.md` から、kis-wordpress の `docs_mod/specs.md` に1行を足す未決事項を外した
+
 ## 0.0.1 - 2026-10-03
 
 ### Added

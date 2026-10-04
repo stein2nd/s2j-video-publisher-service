@@ -169,6 +169,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 5. 処理が未完了で、開始時刻を過ぎ、終了時刻より前なら、操作は `none`。`phase` は `processing` のまま。画面には、処理待ちのため開始が遅れている、と出す。
 6. 処理が `succeeded` で、開始時刻より前なら、`scheduled`。操作は `none`。
 7. `publish_applied_at` と `unpublish_applied_at` がすでに埋まっていれば、操作は `none`。同じ遷移を繰り返さない。
+8. 開始の適用時刻が埋まっていて、終了時刻より前なら、操作は `none`。`phase` は `live`。公開期間の途中を毎分更新しません。
 
 成功した応答を受けたときだけ、対応する `*_applied_at` を `now` で埋めます。失敗では空のままにし、次の実行で同じ操作を返します。待避時間はプラグインが決めます。
 
@@ -178,7 +179,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 
 ## プラグインの責務 (境界。詳細はプラグイン仕様)
 
-プラグイン仕様は、本ドラフトの合意後に [s2j-video-publisher](https://github.com/stein2nd/s2j-video-publisher) に書きます。ここには境界だけを置きます。
+プラグイン仕様の詳細は [S2J Video Publisher の docs_mod/specs.md](https://github.com/stein2nd/s2j-video-publisher/blob/main/docs_mod/specs.md) です。ここには境界だけを置きます。
 
 | 責務 | 内容 |
 | --- | --- |
@@ -246,10 +247,10 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 * 監査前の `videos.update` で、Studio から上げた非公開動画を `unlisted` にできるか。動画1本で確認する。
 * 実行契機を OS cron にするか、WP-Cron にするか。ホストが決まってからプラグイン仕様で固定する。
 * `status.containsSyntheticMedia` を insert ボディの必須項目に含めるか。実装時の公式スキーマで確定する。
-* kis-wordpress の `docs_mod/specs.md` へ、本プロダクトの1行を足すタイミング。方向性の合意後とする。
 
 ## 改訂履歴
 
 | 日付 | 内容 |
 | --- | --- |
 | 2026-10-02 | 初版ドラフト。限定公開の公開期間、`publishAt` を使わないこと、監査前は台帳と `videos.update` だけにすること、ライブラリとプラグインの境界を記録 |
+| 2026-10-04 | プラグイン仕様を [s2j-video-publisher の docs_mod/specs.md](https://github.com/stein2nd/s2j-video-publisher/blob/main/docs_mod/specs.md) に書いた。公開期間の途中は操作 `none`、と補足 |

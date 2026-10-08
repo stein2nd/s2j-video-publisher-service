@@ -51,7 +51,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 ## YouTube API との対応
 
-使うメソッドは、次の2つです。
+使うメソッドは、下記の2つです。
 
 | メソッド | 役割 | クォータの置き場 (2026-10時点の公式) |
 | --- | --- | --- |
@@ -96,13 +96,13 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 OAuth 同意画面が Testing のアプリでは、リフレッシュトークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュトークンがいります。YouTube のコンプライアンス監査とは別です。
 
-スコープは次の2つです。`https://www.googleapis.com/auth/youtube.upload` は `videos.insert` と `videos.update` に使います。`https://www.googleapis.com/auth/youtube.readonly` は、プラグインが接続中のチャンネル名を `channels.list` (`mine=true`、`part=snippet`) で取るために使います。`youtube.upload` だけでは `channels.list` は呼べません。チャンネル全体を扱う `youtube` スコープは要求しません。
+スコープは右記の2つです。`https://www.googleapis.com/auth/youtube.upload` は `videos.insert` と `videos.update` に使います。`https://www.googleapis.com/auth/youtube.readonly` は、プラグインが接続中のチャンネル名を `channels.list` (`mine=true`、`part=snippet`) で取るために使います。`youtube.upload` だけでは `channels.list` は呼べません。チャンネル全体を扱う `youtube` スコープは要求しません。
 
 クライアント ID とクライアントシークレットは、プラグインに同梱しません。サイトの設定として渡します。リポジトリにコミットしません。
 
 ## Composer ライブラリの理由
 
-見た目は WordPress の管理画面ですが、層は次に分かれます。
+見た目は WordPress の管理画面ですが、層は下記に分かれます。
 
 | 層 | 中身 | 置き場 |
 | --- | --- | --- |
@@ -122,7 +122,7 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュトーク�
 | リクエスト材料 | `privacyStatus` だけを変える `videos.update` のボディ。アップロード時は `privacyStatus=private` かつ `publishAt` なしの `videos.insert` メタデータ |
 | 結果の写像 | API の成功で適用時刻を埋める。失敗では適用時刻を空のままにし、エラー文を残す。トークンと動画ファイルの中身は残さない |
 
-アップロード用メタデータに含める項目は、次のとおりです。
+アップロード用メタデータに含める項目は、下記のとおりです。
 
 * `snippet.title`
 * `snippet.description`
@@ -150,7 +150,7 @@ unpublish_applied_at     空、または終了の API が成功した時刻
 last_error               空、または直近の失敗。トークンは入れない
 ```
 
-`phase` の意味は、次のとおりです。
+`phase` の意味は、下記のとおりです。
 
 | phase | 意味 |
 | --- | --- |
@@ -160,7 +160,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 | `ended` | 終了時刻を過ぎ、公開状態は `private`。または、処理が終わる前に期間が閉じた |
 | `failed` | 処理失敗、またはこれ以上リトライしない API エラー |
 
-時刻 `now` を受けたとき、次の操作は1つです。
+時刻 `now` を受けた場合、次の操作は1つです。
 
 1. `observed_processing` が `failed` なら `failed`。操作は `none`。
 2. 終了時刻を過ぎ、`unpublish_applied_at` が空で、一度でも `live` になっている、または `observed_privacy` が `unlisted` なら、操作は `set_private`。
@@ -171,7 +171,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 7. `publish_applied_at` と `unpublish_applied_at` がすでに埋まっていれば、操作は `none`。同じ遷移を繰り返さない。
 8. 開始の適用時刻が埋まっていて、終了時刻より前なら、操作は `none`。`phase` は `live`。公開期間の途中を毎分更新しません。
 
-成功した応答を受けたときだけ、対応する `*_applied_at` を `now` で埋めます。失敗では空のままにし、次の実行で同じ操作を返します。待避時間はプラグインが決めます。
+成功した応答を受けた場合だけ、対応する `*_applied_at` を `now` で埋めます。失敗では空のままにし、次の実行で同じ操作を返します。待避時間はプラグインが決めます。
 
 観測した `privacyStatus` が、これから行う操作の到達値とすでに同じなら、API を呼ばずに `*_applied_at` を埋めます。
 

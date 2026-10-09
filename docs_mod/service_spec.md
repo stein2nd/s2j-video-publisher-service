@@ -94,11 +94,11 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 
 ### トークンが7日で切れる門
 
-OAuth 同意画面が Testing のアプリでは、リフレッシュトークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュトークンがいります。YouTube のコンプライアンス監査とは別です。
+OAuth 同意画面が Testing のアプリでは、リフレッシュ・トークンが7日で失効します。無人のスケジューラには、本番 (In production) の同意画面と、失効しないリフレッシュ・トークンがいります。YouTube のコンプライアンス監査とは別です。
 
 スコープは右記の2つです。`https://www.googleapis.com/auth/youtube.upload` は `videos.insert` と `videos.update` に使います。`https://www.googleapis.com/auth/youtube.readonly` は、プラグインが接続中のチャンネル名を `channels.list` (`mine=true`、`part=snippet`) で取るために使います。`youtube.upload` だけでは `channels.list` は呼べません。チャンネル全体を扱う `youtube` スコープは要求しません。
 
-クライアント ID とクライアントシークレットは、プラグインに同梱しません。サイトの設定として渡します。リポジトリにコミットしません。
+クライアント ID とクライアント・シークレットは、プラグインに同梱しません。サイトの設定として渡します。リポジトリにコミットしません。
 
 ## Composer ライブラリの理由
 
@@ -183,7 +183,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 
 | 責務 | 内容 |
 | --- | --- |
-| 接続 | 管理画面の「YouTube と接続」。認可コードをリフレッシュトークンに換え、サイト設定へ保存する |
+| 接続 | 管理画面の「YouTube と接続」。認可コードをリフレッシュ・トークンに換え、サイト設定へ保存する |
 | 台帳 | 動画1行が、上記レコードである。保存先はプラグインが決める |
 | 実行 | 分の粒度で本ライブラリを呼ぶ。返った操作だけを YouTube API に送る |
 | アップロード | 監査後。セッション開始はプラグインが OAuth 付きで行い、バイト列はブラウザから YouTube の resumable 先へ直接送る。WordPress のディスクと PHP のメモリにファイルを載せない |
@@ -223,7 +223,7 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 2. Studio で非公開 (予約公開なし) にした動画1本に対し、監査前のプロジェクトから `videos.update` で `unlisted` と `private` を往復できるかを確認する。
 3. 本 repo でスケルトンと純関数の初版 (PHPUnit、WordPress なし、HTTP なし)。
 4. プラグインが Composer で require し、台帳と `videos.update` のスケジューラをつなぐ。
-5. OAuth 同意画面を Production にし、リフレッシュトークンが7日で切れないことを確認する。
+5. OAuth 同意画面を Production にし、リフレッシュ・トークンが7日で切れないことを確認する。
 6. YouTube API のコンプライアンス監査の後に、ブラウザから YouTube へ直接送る `videos.insert` を足す。挿入時の公開状態は `private`、`publishAt` は付けない。処理が `succeeded` になってから、上記の開始・終了に乗る。
 
 ## 本ドラフトの提案

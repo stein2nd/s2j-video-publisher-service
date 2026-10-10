@@ -74,7 +74,7 @@ Studio の予約公開は、非公開の動画を指定時刻に **公開 (publi
 * [Revision History](https://developers.google.com/youtube/v3/revision_history)
 * [Schedule video publish time](https://support.google.com/youtube/answer/1270709)
 
-2025-12-04の改訂で、アップロードのコストは約1,600units から約100units へ変わっています。2026-06-01以降の現行ドキュメントでは、`videos.insert` は専用バケットの1unit / コールです。Quota Calculator の表には旧コストが残っている箇所があります。実装時は Cloud Console の当該プロジェクトの表示を正とします。
+2025-12-04の改訂で、アップロードのコストは約1,600units から約100units に変わっています。2026-06-01以降の現行ドキュメントでは、`videos.insert` は専用バケットの1unit / コールです。Quota Calculator の表には旧コストが残っている箇所があります。実装時は Cloud Console の当該プロジェクトの表示を正とします。
 
 本プロダクトの本数 (1日に数本、状態変更は開始と終了の2回) は、デフォルト枠の中に収まります。処理待ちの確認は、`processing` の動画だけを `videos.list` で見ます。公開期間中の動画を毎分ポーリングしません。
 
@@ -183,10 +183,10 @@ last_error               空、または直近の失敗。トークンは入れ�
 
 | 責務 | 内容 |
 | --- | --- |
-| 接続 | 管理画面の「YouTube と接続」。認可コードをリフレッシュ・トークンに換え、サイト設定へ保存する |
+| 接続 | 管理画面の「YouTube と接続」。認可コードをリフレッシュ・トークンに換え、サイト設定に保存する |
 | 台帳 | 動画1行が、上記レコードである。保存先はプラグインが決める |
 | 実行 | 分の粒度で本ライブラリを呼ぶ。返った操作だけを YouTube API に送る |
-| アップロード | 監査後。セッション開始はプラグインが OAuth 付きで行い、バイト列はブラウザから YouTube の resumable 先へ直接送る。WordPress のディスクと PHP のメモリにファイルを載せない |
+| アップロード | 監査後。セッション開始はプラグインが OAuth 付きで行い、バイト列はブラウザから YouTube の resumable 先に直接送る。WordPress のディスクと PHP のメモリにファイルを載せない |
 | 表示 | 見出しは「動画の公開期間」。列はタイトル、状態、開始、終了、直近のエラー |
 
 実行の契機はプラグインが持ちます。処理は WP-Cron の1分間隔に置き、最終実行の時刻の遅れで、訪問なしに進んでいるかを画面が判断します。ライブラリは契機を知りません。`now` を受け取るだけです。
@@ -224,7 +224,7 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 3. 本 repo でスケルトンと純関数の初版 (PHPUnit、WordPress なし、HTTP なし)。
 4. プラグインが Composer で require し、台帳と `videos.update` のスケジューラをつなぐ。
 5. OAuth 同意画面を Production にし、リフレッシュ・トークンが7日で切れないことを確認する。
-6. YouTube API のコンプライアンス監査の後に、ブラウザから YouTube へ直接送る `videos.insert` を足す。挿入時の公開状態は `private`、`publishAt` は付けない。処理が `succeeded` になってから、上記の開始・終了に乗る。
+6. YouTube API のコンプライアンス監査の後に、ブラウザから YouTube に直接送る `videos.insert` を足す。挿入時の公開状態は `private`、`publishAt` は付けない。処理が `succeeded` になってから、上記の開始・終了に乗る。
 
 ## 本ドラフトの提案
 

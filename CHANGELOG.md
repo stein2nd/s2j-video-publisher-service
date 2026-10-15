@@ -2,6 +2,14 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-15
+
+### Changed
+
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.29に更新
+* `.textlintrc.json` の allowlist に `#status-` 付きフラグメント ID を追加
+* `composer.lock` の開発依存を更新 (PHPStan、PHPUnit 系)
+
 ## 0.0.1 - 2026-10-10
 
 ### Changed

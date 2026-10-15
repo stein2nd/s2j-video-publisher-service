@@ -12,13 +12,14 @@
                 "/スクロール/",
                 "/ロールバック/",
                 "/@wordpress\\/[a-zA-Z0-9@._/-]*/i",
+                "/[.。]\\s*「/u",
+                "/#status-[a-z0-9-]+/",
                 "/kis-wordpress/",
                 "/inquiry-destination-service/",
                 "/s2j-inquiry-destination-service/",
                 "/kansai-wordpress-meetup/",
                 "/PHPMailer/",
-                "/wp_mail/",
-                "/[.。]\\s*「/u"
+                "/wp_mail/"
             ]
         }
     },

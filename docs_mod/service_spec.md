@@ -205,7 +205,7 @@ last_error               空、または直近の失敗。トークンは入れ�
 | 内側はビジネスルール | 公開期間の検証と、次の `privacyStatus` の決定 |
 | 外側は詳細 | プラグインが OAuth、HTTP、cron、画面を持つ |
 
-パッケージ名は `s2j/video-publisher-service` とします。PHP の名前空間は `S2J\VideoPublisherService\` とします。ライセンスは GPL-3.0-or-later とします。プラグインも同じです。
+パッケージ名は `s2j/video-publisher-service` とします。PHP の名前空間は `S2J\VideoPublisherService\` とします。PHP の実行環境は [WordPress 必須要件](https://ja.wordpress.org/about/requirements/) に合わせ、v8.3以上とします。ライセンスは GPL-3.0-or-later とします。プラグインも同じです。
 
 ## 関連リポジトリ
 
@@ -257,3 +257,4 @@ KIS のサイトは、このプラグインのユーザーの一つです。チ�
 | 2026-10-05 | 接続中のチャンネル名のため、スコープに `youtube.readonly` を足す。`channels.list` は `youtube.upload` だけでは呼べない、と記録 |
 | 2026-10-05 | 実行契機はプラグインの WP-Cron に置く。ライブラリは `now` を受け取るだけ、と記録 |
 | 2026-10-05 | 監査前の `videos.update` の未決を、プラグイン仕様と同じく、人が動画1本で往復する結果である、とそろえた |
+| 2026-10-24 | 対応 PHP の下限を WordPress 必須要件に合わせ8.3以上と記録 |

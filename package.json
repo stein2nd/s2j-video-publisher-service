@@ -18,10 +18,16 @@
     "files": [],
     "main": "",
     "scripts": {
-        "lint:docs": "s2j-docs-linter ./README.md ./CHANGELOG.md ./docs/**/*.md ./docs_mod/**/*.md"
+        "lint:docs": "s2j-docs-linter ./README.md ./CHANGELOG.md ./docs/**/*.md ./docs_mod/**/*.md",
+        "lint:php": "composer lint:php",
+        "phpstan": "composer phpstan",
+        "phpcs": "composer phpcs",
+        "pretest:unit:php:local": "composer install --no-interaction --prefer-dist",
+        "test:unit:php:local": "composer test",
+        "pretest:lint:php": "composer install --no-interaction --prefer-dist"
     },
     "devDependencies": {
-        "@s2j/docs-linter": "^1.0.29"
+        "@s2j/docs-linter": "^1.0.30"
     },
     "allowScripts": {
         "@s2j/docs-linter": true,

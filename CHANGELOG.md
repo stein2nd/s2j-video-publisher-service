@@ -2,6 +2,23 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-24
+
+### Added
+
+* `phpcs.xml.dist` に PSR-12のルールセットを追加 (`src/`、`tests/`)
+
+### Changed
+
+* 対応 PHP の下限を v8.3以上に引き上げ ([WordPress 必須要件](https://ja.wordpress.org/about/requirements/) に合わせる)
+* `composer.json` の `require.php` を `>=8.3` に、`phpcs.xml.dist` の `php_version` を v8.3に合わせた
+* `docs_mod/service_spec.md` と README に PHP v8.3以上を記載
+* `.github/workflows/docs-lint.yml` で PHP v8.3をセットアップし、`composer.json` 変更時にも CI が走るようにした
+* `composer.json` から `version` を外した (Composer ライブラリはタグでバージョンを付ける)
+* `package.json` に `lint:php`、`phpstan`、`phpcs`、`test:unit:php:local` など PHP 向け npm スクリプトを追加
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.30に更新
+* `composer.lock` の開発依存を更新 (PHPUnit 系)
+
 ## 0.0.1 - 2026-10-15
 
 ### Changed
@@ -51,7 +68,7 @@
 
 ### Added
 
-* `composer.json` を追加 (`s2j/video-publisher-service`、名前空間 `S2J\VideoPublisherService\`、PHP 8.0以上、開発依存に PHPUnit / PHPStan / PHPCS)
+* `composer.json` を追加 (`s2j/video-publisher-service`、名前空間 `S2J\VideoPublisherService\`、開発依存に PHPUnit / PHPStan / PHPCS)
 
 ### Changed
 

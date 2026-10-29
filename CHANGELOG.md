@@ -2,6 +2,13 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-29
+
+### Changed
+
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.31に更新
+* `composer.lock` の開発依存を更新 (PHPStan、PHPUnit)
+
 ## 0.0.1 - 2026-10-24
 
 ### Added

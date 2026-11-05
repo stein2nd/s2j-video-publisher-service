@@ -106,7 +106,7 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュ・トー�
 
 | 層 | 中身 | 置き場 |
 | --- | --- | --- |
-| 計算 | 公開期間の検証、状態の写像、次にたたく API 操作の決定、`videos.insert` / `videos.update` のリクエスト材料 | **本ライブラリ** |
+| 計算 | 公開期間の検証、状態のマッピング、次にたたく API 操作の決定、`videos.insert` / `videos.update` のリクエスト材料 | **本ライブラリ** |
 | 副作用 | OAuth、HTTP、ブラウザからの resumable upload、cron、管理画面、動画 ID の保存 | **S2J Video Publisher** (プラグイン) |
 
 プラグイン一本に判断を置くと、時刻と公開状態の組み合わせをユニットテストするたびに WordPress と YouTube が必要になります。
@@ -120,7 +120,7 @@ OAuth 同意画面が Testing のアプリでは、リフレッシュ・トー�
 | 検証 | `publish_at` は `unpublish_at` より前。両方ともタイムゾーン付きの時刻。タイトルは空でない |
 | 次の操作 | 下記の状態遷移に従い、`none` / `set_unlisted` / `set_private` / `insert_private` のいずれかを返す |
 | リクエスト材料 | `privacyStatus` だけを変える `videos.update` のボディ。アップロード時は `privacyStatus=private` かつ `publishAt` なしの `videos.insert` メタデータ |
-| 結果の写像 | API の成功で適用時刻を埋める。失敗では適用時刻を空のままにし、エラー文を残す。トークンと動画ファイルの中身は残さない |
+| 結果のマッピング | API の成功で適用時刻を埋める。失敗では適用時刻を空のままにし、エラー文を残す。トークンと動画ファイルの中身は残さない |
 
 アップロード用メタデータに含める項目は、下記のとおりです。
 

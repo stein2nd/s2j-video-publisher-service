@@ -2,6 +2,14 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-11-05
+
+### Changed
+
+* `docs_mod/service_spec.md` の「写像」を「マッピング」にそろえた
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.32に更新
+* `composer.lock` の開発依存を更新 (PHPStan、PHPUnit 系)
+
 ## 0.0.1 - 2026-10-29
 
 ### Changed

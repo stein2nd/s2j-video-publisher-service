@@ -27,7 +27,7 @@
         "pretest:lint:php": "composer install --no-interaction --prefer-dist"
     },
     "devDependencies": {
-        "@s2j/docs-linter": "^1.0.32"
+        "@s2j/docs-linter": "^1.0.34"
     },
     "allowScripts": {
         "@s2j/docs-linter": true,
